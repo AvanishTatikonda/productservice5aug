@@ -1,12 +1,12 @@
 package com.example.productservice5aug.repositories;
 
-import com.example.productservice5aug.models.Category;
 import com.example.productservice5aug.models.Product;
+//import org.hibernate.query.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.Date;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+//import java.awt.print.Pageable;
 import java.util.List;
-import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product,Long> {
 
@@ -20,4 +20,6 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     List<Product> findByCreatedAtIsNotNullAndDescription(String description);
 
     List<Product> findByIdIs(Long id);
+    List<Product> findByTitleContaining(String query);
+    Page<Product> findByTitleContaining(String query, Pageable pageable);
 }
