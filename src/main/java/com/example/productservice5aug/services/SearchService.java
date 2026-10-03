@@ -2,7 +2,9 @@ package com.example.productservice5aug.services;
 
 import com.example.productservice5aug.dtos.search.SortingCriteria;
 import com.example.productservice5aug.models.Product;
+import com.example.productservice5aug.dtos.search.FilterDto;
 import com.example.productservice5aug.repositories.ProductRepository;
+import com.example.productservice5aug.services.FilteringService.FilterFactory;
 import com.example.productservice5aug.services.sortingService.Sorter;
 import com.example.productservice5aug.services.sortingService.SorterFactory;
 import org.springframework.data.domain.Page;
@@ -25,6 +27,7 @@ public class SearchService {
     public Page<Product> search(
             String query,
             Long categoryId,
+            List<FilterDto> filters,
             int pageNumber,
             int pageSize,
             SortingCriteria sortingCriteria
@@ -32,14 +35,35 @@ public class SearchService {
 
         // 1. Get all products matching the search query
         List<Product> products;
-        if(categoryId==null){
-            products=productRepository.findByTitleContaining(query);
-        }else {
+        if (categoryId == null) {
+            products = productRepository.findByTitleContaining(query);
+        } else {
             products = productRepository.findAllByTitleContainingAndCategory_Id(
-                            query,
-                            categoryId
-                    );
+                    query,
+                    categoryId
+            );
         }
+
+
+        for (FilterDto filterDto : filters) {
+
+            if (filterDto == null || filterDto.getKey() == null) {
+                continue;
+            }
+
+            var filter = FilterFactory.getFilterFromKey(
+                    filterDto.getKey()
+            );
+
+            if (filter != null) {
+                products = filter.apply(
+                        products,
+                        filterDto.getValues()
+                );
+            }
+        }
+
+
         // 2. Find which sorter we need
         Sorter sorter =
                 SorterFactory.getSorterByCriteria(sortingCriteria);

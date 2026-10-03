@@ -1,5 +1,6 @@
 package com.example.productservice5aug.controllers;
 
+import com.example.productservice5aug.dtos.search.FilterDto;
 import com.example.productservice5aug.dtos.search.SortingCriteria;
 import com.example.productservice5aug.dtos.CreateProductRequestDto;
 import com.example.productservice5aug.dtos.CreateProductResponseDto;
@@ -70,10 +71,11 @@ private ProductService productService;
     public void delete(@PathVariable Long id){
         productService.deleteProduct(id);
     }
-    @GetMapping("/search")
+    @PostMapping("/search")
     public Page<Product> searchProducts(
             @RequestParam String query,
             @RequestParam(required = false) Long categoryId,
+            @RequestBody List<FilterDto> filters,
             @RequestParam int pageNumber,
             @RequestParam int pageSize,
             @RequestParam SortingCriteria sortingCriteria
@@ -81,6 +83,7 @@ private ProductService productService;
         return searchService.search(
                 query,
                 categoryId,
+                filters,
                 pageNumber,
                 pageSize,
                 sortingCriteria

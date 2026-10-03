@@ -19,4 +19,6 @@ public class Product extends BaseModel{
     private String CategoryName;
     @ManyToOne(fetch = FetchType.LAZY)
     private Category category;
+    private String brand;
+    private String ram;
 }

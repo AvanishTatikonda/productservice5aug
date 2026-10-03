@@ -13,7 +13,8 @@ public class UpdateProductRequestDto {
     private double price;
     private String imageUrl;
     private String categoryName;
-
+    private String brand;
+    private String ram;
     public Product toProduct() {
         Product product = new Product();
 
@@ -22,6 +23,8 @@ public class UpdateProductRequestDto {
         product.setPrice(this.price);
         product.setImageUrl(this.imageUrl);
        product.setCategoryName(this.categoryName);
+        product.setBrand(this.brand);
+        product.setRam(this.ram);
 
         return product;
     }

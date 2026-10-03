@@ -14,6 +14,8 @@ public class CreateProductRequestDto {
     private double price;
     private String imageUrl;
     private String categoryName;
+    private String brand;
+    private String ram;
 
     public Product toProduct(){
         Product product =new Product();
@@ -25,7 +27,8 @@ public class CreateProductRequestDto {
         Category category = new Category();
         category.setTitle(this.categoryName);
         product.setCategory(category);
-
+        product.setBrand(this.brand);
+        product.setRam(this.ram);
         return product;
     }
 }

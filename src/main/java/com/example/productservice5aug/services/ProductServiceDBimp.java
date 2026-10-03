@@ -55,6 +55,12 @@ public class ProductServiceDBimp implements ProductService{
         if(product.getCategoryName()!=null){
             exsistingProduct.setCategoryName(product.getCategoryName());
         }
+        if(product.getRam()!=null){
+            exsistingProduct.setRam(product.getRam());
+        }
+        if(product.getBrand()!=null){
+            exsistingProduct.setBrand(product.getBrand());
+        }
         if(product.getPrice()>0){
             exsistingProduct.setPrice(product.getPrice());
         }
