@@ -24,15 +24,22 @@ public class SearchService {
 
     public Page<Product> search(
             String query,
+            Long categoryId,
             int pageNumber,
             int pageSize,
             SortingCriteria sortingCriteria
     ) {
 
         // 1. Get all products matching the search query
-        List<Product> products =
-                productRepository.findByTitleContaining(query);
-
+        List<Product> products;
+        if(categoryId==null){
+            products=productRepository.findByTitleContaining(query);
+        }else {
+            products = productRepository.findAllByTitleContainingAndCategory_Id(
+                            query,
+                            categoryId
+                    );
+        }
         // 2. Find which sorter we need
         Sorter sorter =
                 SorterFactory.getSorterByCriteria(sortingCriteria);

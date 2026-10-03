@@ -22,4 +22,13 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     List<Product> findByIdIs(Long id);
     List<Product> findByTitleContaining(String query);
     Page<Product> findByTitleContaining(String query, Pageable pageable);
+    Page<Product> findAllByTitleContainingAndCategory_Id(
+            String title,
+            Long categoryId,
+            Pageable pageable
+    );
+    List<Product> findAllByTitleContainingAndCategory_Id(
+            String title,
+            Long categoryId
+    );
 }

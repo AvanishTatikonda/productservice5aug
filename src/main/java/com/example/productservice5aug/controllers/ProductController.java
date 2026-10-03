@@ -73,12 +73,14 @@ private ProductService productService;
     @GetMapping("/search")
     public Page<Product> searchProducts(
             @RequestParam String query,
+            @RequestParam(required = false) Long categoryId,
             @RequestParam int pageNumber,
             @RequestParam int pageSize,
             @RequestParam SortingCriteria sortingCriteria
     ) {
         return searchService.search(
                 query,
+                categoryId,
                 pageNumber,
                 pageSize,
                 sortingCriteria
